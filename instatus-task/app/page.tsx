@@ -26,8 +26,12 @@ export interface Action {
   object: string;
   name:   string;
 }
+
+const filters = ["name", "email", "actor", "id"];
 export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<Event>();
+  const [filter, setFilter] = useState<string>("name");
+  const [filterIndex, setFilterIndex] = useState(0);
   const onClose = () => {
     setSelectedEvent(undefined);
   }
@@ -38,7 +42,13 @@ export default function Home() {
           <tr>
             <td colSpan={4}>
             <div className='flex p-2 m-2 rounded-xl border border-[#E0E0DF]'>
-              <input type='text' placeholder='Search name, email or action...' className='w-full bg-transparent'/>
+              <input type='text' placeholder={`Search ${filter}`} className='w-full bg-transparent'/>
+              <button className=" hover:bg-slate-300 p-2 rounded-md" onClick={() => {
+                setFilterIndex((filterIndex + 1)%4);
+                setFilter(filters[(filterIndex + 1)%4]);
+              }}>
+                <Image src={"/assets/Vector.svg"} alt="filter" width={15} height={8.5}/>
+              </button>
             </div>
             </td>
           </tr>
