@@ -12,13 +12,16 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "color2k": "^2.0.3",
     "framer-motion": "^11.0.8",
     "next": "14.1.1",
+    "pleasejs": "^0.4.2",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pleasejs": "^0.0.33",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",

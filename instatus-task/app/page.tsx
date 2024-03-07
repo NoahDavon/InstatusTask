@@ -1,5 +1,6 @@
 import Image from "next/image";
 import events from "./dummies/events";
+import Avatar from "./components/Avatar/Avatar";
 
 export default function Home() {
   return (
@@ -21,7 +22,7 @@ export default function Home() {
             <tr key={e.id} className=" bg-white hover:bg-[#FBFBFB] text-black">
               {/* TODO: Icon */}
               {/* TODO: Extract */}
-              <td className=" p-4 pr-0">{e.target_name}</td>
+              <td className=" p-4 pr-0 flex gap-3"><Avatar Name={e.target_name.toUpperCase()}/>{e.target_name}</td>
               <td className=" p-4 pr-0">{e.action.name}</td>
               <td className=" p-4 pr-0">{(new Date(e.occurred_at)).toLocaleString("en-US", {dateStyle: "short", timeStyle: "short"})}</td>
               <td><Image src={"/assets/Vector (Stroke).svg"} alt="See more" width={9} height={14}/></td>
