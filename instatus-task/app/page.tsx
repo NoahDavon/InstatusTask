@@ -1,10 +1,17 @@
+'use client'
 import Image from "next/image";
 import events from "./dummies/events";
 import Avatar from "./components/Avatar/Avatar";
+import Details from "./components/Details/Details";
+import { useState } from "react";
 
 export default function Home() {
+  const [modal, setModal] = useState(true);
+  const onClose = () => {
+    setModal(false);
+  }
   return (
-    <div className=" w-full">
+    <div className=" w-full z-0">
       <table className="table-auto w-3/4 m-auto text-left border-separate border border-spacing-0 overflow-hidden border-opacity-0 rounded-xl">
         <thead className=" bg-[#F5F5F5] text-[#616161]">
           <tr>
@@ -29,6 +36,7 @@ export default function Home() {
             </tr>
             )}
       </table>
+      {modal && <Details onClose={onClose}/>}
       </div>
   );
 }
