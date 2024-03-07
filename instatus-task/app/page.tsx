@@ -5,10 +5,31 @@ import Avatar from "./components/Avatar/Avatar";
 import Details from "./components/Details/Details";
 import { useState } from "react";
 
+
+
+export interface Event {
+  id:          string;
+  object:      string;
+  actor_id:    string;
+  actor_name:  string;
+  group:       string;
+  action:      Action;
+  target_id:   string;
+  target_name: string;
+  location:    string;
+  occurred_at: string;
+  metadata:    any;
+}
+
+export interface Action {
+  id:     string;
+  object: string;
+  name:   string;
+}
 export default function Home() {
-  const [modal, setModal] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState<Event>();
   const onClose = () => {
-    setModal(false);
+    setSelectedEvent(undefined);
   }
   return (
     <div className=" w-full z-0">
@@ -26,7 +47,7 @@ export default function Home() {
           </tr>
         </thead>
           {events.map(e => 
-            <tr key={e.id} className=" bg-white hover:bg-[#FBFBFB] text-black">
+            <tr key={e.id} className=" bg-white hover:bg-[#FBFBFB] text-black" onClick={ () => setSelectedEvent(e)}>
               {/* TODO: Icon */}
               {/* TODO: Extract */}
               <td className=" p-4 pr-0 flex gap-3"><Avatar Name={e.target_name.toUpperCase()}/>{e.target_name}</td>
@@ -36,7 +57,7 @@ export default function Home() {
             </tr>
             )}
       </table>
-      {modal && <Details onClose={onClose}/>}
+      {selectedEvent && <Details event={selectedEvent} onClose={onClose}/>}
       </div>
   );
 }
