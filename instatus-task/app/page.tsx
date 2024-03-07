@@ -1,9 +1,10 @@
+import Image from "next/image";
 import events from "./dummies/events";
 
 export default function Home() {
   return (
     <div className=" w-full">
-      <table className="table-auto w-full text-left border-separate border border-spacing-0 overflow-hidden border-opacity-0 rounded-xl">
+      <table className="table-auto w-3/4 m-auto text-left border-separate border border-spacing-0 overflow-hidden border-opacity-0 rounded-xl">
         <thead className=" bg-[#F5F5F5] text-[#616161]">
           <tr>
             <td colSpan={4}>
@@ -23,6 +24,7 @@ export default function Home() {
               <td className=" p-4 pr-0">{e.target_name}</td>
               <td className=" p-4 pr-0">{e.action.name}</td>
               <td className=" p-4 pr-0">{(new Date(e.occurred_at)).toLocaleString("en-US", {dateStyle: "short", timeStyle: "short"})}</td>
+              <td><Image src={"/assets/Vector (Stroke).svg"} alt="See more" width={9} height={14}/></td>
             </tr>
             )}
       </table>
