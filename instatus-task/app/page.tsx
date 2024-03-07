@@ -18,9 +18,11 @@ export default function Home() {
         </thead>
           {events.map(e => 
             <tr key={e.id} className=" bg-white hover:bg-[#FBFBFB] text-black">
+              {/* TODO: Icon */}
+              {/* TODO: Extract */}
               <td className=" p-4 pr-0">{e.target_name}</td>
               <td className=" p-4 pr-0">{e.action.name}</td>
-              <td className=" p-4 pr-0">{(new Date(e.occurred_at)).toLocaleDateString()}</td>
+              <td className=" p-4 pr-0">{(new Date(e.occurred_at)).toLocaleString("en-US", {dateStyle: "short", timeStyle: "short"})}</td>
             </tr>
             )}
       </table>
