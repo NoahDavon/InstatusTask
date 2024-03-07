@@ -58,6 +58,9 @@ export default function Home() {
               <td><Image src={"/assets/Vector (Stroke).svg"} alt="See more" width={9} height={14}/></td>
             </tr>
             )}
+          <tr className=" bg-[#F5F5F5] text-[#616161]">
+            <th colSpan={6} className="text-center p-4"><button>Load more</button></th>
+          </tr>
       </table>
       {selectedEvent && <Details event={selectedEvent} onClose={onClose}/>}
       </div>
