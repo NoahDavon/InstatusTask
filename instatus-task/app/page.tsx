@@ -37,7 +37,9 @@ export default function Home() {
         <thead className=" bg-[#F5F5F5] text-[#616161]">
           <tr>
             <td colSpan={4}>
-              {/* search bar here */}
+            <div className='flex p-2 m-2 rounded-xl border border-[#E0E0DF]'>
+              <input type='text' placeholder='Search name, email or action...' className='w-full bg-transparent'/>
+            </div>
             </td>
           </tr>
           <tr>
