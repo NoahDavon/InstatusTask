@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest){
   const event = await request.json();
   const res = await prisma.event.create({
-    data: event
+    data: {...event, occured_at: (new Date())} //couldn't leave it like that... 
   })
   return new Response(JSON.stringify(res), {
     status: 200
