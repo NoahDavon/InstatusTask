@@ -30,7 +30,7 @@ export interface Action {
 const filters = ["name", "email", "actor", "id"];
 export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<Event>();
-  const [filter, setFilter] = useState<string>("name");
+  const [filter, setFilter] = useState("name");
   const [filterIndex, setFilterIndex] = useState(0);
   const onClose = () => {
     setSelectedEvent(undefined);
