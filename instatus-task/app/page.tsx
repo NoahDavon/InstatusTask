@@ -32,7 +32,7 @@ const fetcher = (url : string) => fetch(url).then((res) => res.json())
 preload('/api/events', fetcher)
 export default function Home() {
   const [queryURL, setQueryURL] = useState("/api/events?page=1");
-  const {isLoading, error, data} = useSWR(queryURL, fetcher)
+  const {isLoading, data} = useSWR(queryURL, fetcher)
   const [selectedEvent, setSelectedEvent] = useState<Event>();
   const [filter, setFilter] = useState("name");
   const [query, setQuery] = useState("");

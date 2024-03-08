@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '@prisma/client/extension';
+import { PrismaClient } from '@prisma/client';
 import { type NextRequest } from 'next/server'
 
 const DOCS_PER_PAGE = 6;
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       [type]: query
     }
   }})
-  const nextPageExists: boolean = nextPage;
+  const nextPageExists: boolean = null !== nextPage;
   const res = {events, nextPageExists};
   return new Response(JSON.stringify(res),
     {
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest){
-  const event = request.json();
+  const event = await request.json();
   const res = prisma.event.create({
     data: event
   })
