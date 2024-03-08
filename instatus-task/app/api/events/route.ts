@@ -1,8 +1,10 @@
-import { PrismaClient } from '@prisma/client/extension';
+import { PrismaClient, Prisma } from '@prisma/client/extension';
 import { type NextRequest } from 'next/server'
+import { json } from 'stream/consumers';
 
 const DOCS_PER_PAGE = 6;
-const prisma = new PrismaClient();
+
+const prisma : PrismaClient = new PrismaClient();
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const type = searchParams.get('type') as string;
@@ -28,5 +30,15 @@ export async function GET(request: NextRequest) {
     {
       status: 200
     })
-  // query is "hello" for /api/event?query=hello
+  //.../api/event
+}
+
+export async function POST(request: NextRequest){
+  const event = request.json();
+  const res = prisma.event.create({
+    data: event
+  })
+  return new Response(JSON.stringify(res), {
+    status: 200
+  })
 }
