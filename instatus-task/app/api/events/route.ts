@@ -1,6 +1,5 @@
 import { PrismaClient, Prisma } from '@prisma/client/extension';
 import { type NextRequest } from 'next/server'
-import { json } from 'stream/consumers';
 
 const DOCS_PER_PAGE = 6;
 
@@ -10,20 +9,20 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get('type') as string;
   const query = searchParams.get('query');
   const page = parseInt(searchParams.get("page")?? "1") - 1;
-  const events = await prisma.event.findMany({
+  const events = await prisma.event.findMany({...{
     skip: page * DOCS_PER_PAGE,
     take: DOCS_PER_PAGE,
-    where: {
-      [type]: query
-    }
-  }
+    
+  }, ...(query) &&{ where: {
+    [type]: query
+ }}}
   )
-  const nextPage = await prisma.event.findFirst({
+  const nextPage = await prisma.event.findFirst({...{
     skip: (page+1) * DOCS_PER_PAGE,
-    where: {
+  }, ...(query) && { where: {
       [type]: query
     }
-  })
+  }})
   const nextPageExists: boolean = nextPage;
   const res = {events, nextPageExists};
   return new Response(JSON.stringify(res),
