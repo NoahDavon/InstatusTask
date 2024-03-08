@@ -1,6 +1,5 @@
 'use client'
 import Image from "next/image";
-import events from "./dummies/events";
 import Avatar from "./components/Avatar/Avatar";
 import Details from "./components/Details/Details";
 import { useEffect, useState } from "react";
@@ -16,7 +15,7 @@ export interface Event {
   target_id:   string;
   target_name: string;
   location:    string;
-  occurred_at: string;
+  occured_at: string;
   metadata:    string;
 }
 
@@ -39,6 +38,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [filterIndex, setFilterIndex] = useState(0);
   const [lastSearch, setLastSearch] = useState("name")
+  const [events, setEvents] = useState<Event[]>([]);
   const onClose = () => {
     setSelectedEvent(undefined);
   }
@@ -61,6 +61,14 @@ export default function Home() {
       refetch(1, `type=${filter}&&query=${query}&&`);
     }
   }
+  useEffect(()=> {
+    if(data&& page == 1){
+      setEvents(data.events)
+    }
+    else if (data) {
+      setEvents([...events,...data.events])
+    }
+  }, [data])
   return (
     <div className=" w-full z-0">
       <table className="table-auto w-3/4 m-auto text-left border-separate border border-spacing-0 overflow-hidden border-opacity-0 rounded-xl">
@@ -85,12 +93,12 @@ export default function Home() {
             <th className=" p-4 pr-0" colSpan={2}>DATE</th>
           </tr>
         </thead>
-          {data.events?.map((e: Event) => 
+          {events?.map((e: Event) => 
             <tr key={e.id} className=" bg-white hover:bg-[#FBFBFB] text-black" onClick={ () => setSelectedEvent(e)}>
               {/* TODO: Extract */}
               <td className=" p-4 pr-0 flex gap-3"><Avatar Name={e.target_name.toUpperCase()}/>{e.target_name}</td>
               <td className=" p-4 pr-0">{e.action.name}</td>
-              <td className=" p-4 pr-0">{(new Date(e.occurred_at)).toLocaleString("en-US", {dateStyle: "short", timeStyle: "short"})}</td>
+              <td className=" p-4 pr-0">{(new Date(e.occured_at)).toLocaleString("en-US", {dateStyle: "short", timeStyle: "short"})}</td>
               <td><Image src={"/assets/Vector (Stroke).svg"} alt="See more" width={9} height={14}/></td>
             </tr>
             )}

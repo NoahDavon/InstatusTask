@@ -12,6 +12,9 @@ export async function GET(request: NextRequest) {
   const events = await prisma.event.findMany({...{
     skip: page * DOCS_PER_PAGE,
     take: DOCS_PER_PAGE,
+    include: {
+      action: true
+    }
     
   }, ...(query) &&{ where: {
     [type]: query
@@ -34,7 +37,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest){
   const event = await request.json();
-  const res = prisma.event.create({
+  const res = await prisma.event.create({
     data: event
   })
   return new Response(JSON.stringify(res), {
