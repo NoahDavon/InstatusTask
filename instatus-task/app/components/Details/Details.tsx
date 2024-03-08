@@ -22,7 +22,7 @@ export default function Details({onClose, event}: Props) {
             <td className=' pb-2'>Name</td>
             <td className='text-black pb-2'>{event.action.name}</td>
             <td className=' pb-2'>Readable</td>
-            <td className='text-black pb-2'>{(new Date(event.occurred_at)).toLocaleString("en-US", {dateStyle: "short", timeStyle: "short"})}</td>
+            <td className='text-black pb-2'>{(new Date(event.occured_at)).toLocaleString("en-US", {dateStyle: "short", timeStyle: "short"})}</td>
           </tr>
           <tr className='text-[#929292]'>
             <td className=' pb-2'>Email</td>
@@ -31,11 +31,18 @@ export default function Details({onClose, event}: Props) {
             <td className='text-black pb-2'>{event.object}</td>
           </tr>
           <tr className='text-[#929292]'>
+            <td className=' pb-2'>ID</td>
+            <td className='text-black pb-2'>{event.actor_id}</td>
+            <td className=' pb-2'>ID</td>
+            <td className='text-black pb-2'>{event.action.id}</td>
+          </tr>
+          <tr className='text-[#929292]'>
             <th colSpan={2} className='pt-4'>META</th>
             <th colSpan={2} className='pt-4'>TARGET</th>
           </tr>
           <tr>
             <td colSpan={2} className='text-black'>{JSON.stringify(event.metadata)}</td>
+            <td colSpan={2} className='text-black'>{event.target_id}</td>
           </tr>
 
         </table>

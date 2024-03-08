@@ -25,13 +25,12 @@ export interface Action {
   name:   string;
 }
 
-const filters = ["name", "email", "actor", "id"];
+const filters = ["name", "email", "actorID", "targetID", "actionID"];
+const len = filters.length;
 const fetcher = (url : string) => fetch(url).then((res) => res.json())
- 
-preload('/api/events', fetcher)
 export default function Home() {
   const [queryURL, setQueryURL] = useState("/api/events?page=1");
-  const {isLoading, data} = useSWR(queryURL, fetcher)
+  const {isLoading, error, data} = useSWR(queryURL, fetcher)
   const [selectedEvent, setSelectedEvent] = useState<Event>();
   const [filter, setFilter] = useState("name");
   const [query, setQuery] = useState("");
@@ -54,9 +53,9 @@ export default function Home() {
     
   }
   const search = () => {
-    if(!query) return;
     if(lastSearch != filter + query){
       setLastSearch(filter + query);
+      setEvents([]);
       setPage(1);
       refetch(1, `type=${filter}&&query=${query}&&`);
     }
@@ -75,12 +74,14 @@ export default function Home() {
         <thead className=" bg-[#F5F5F5] text-[#616161]">
           <tr>
             <td colSpan={4}>
-            <div className='flex p-2 m-2 rounded-xl border border-[#E0E0DF]'>
-              <input type='text' placeholder={`Search ${filter}`} className='w-full bg-transparent' onChange={e => setQuery(e.target.value)}/>
-              <button className=" hover:bg-slate-300 p-2 rounded-md" onClick={search}>Search</button>
-              <button className=" hover:bg-slate-300 p-2 rounded-md" onClick={() => {
-                setFilterIndex((filterIndex + 1)%4);
-                setFilter(filters[(filterIndex + 1)%4]);
+            <div className='flex items-center p-2 m-2 rounded-xl border border-[#E0E0DF]'>
+              <input type='text' placeholder={`Search name, email, ID...`} className='w-full bg-transparent' value={query} onChange={e => setQuery(e.target.value)}/>
+              <button className=" bg-slate-200 mx-2 hover:bg-slate-300 p-2 rounded-md" onClick={search}>Search: </button>
+              <div className=" w-20">{filter}</div>
+              <button className=" bg-slate-200 hover:bg-slate-300 p-2 rounded-md h-full" onClick={() => {
+                setFilterIndex((filterIndex + 1)%len);
+                setFilter(filters[(filterIndex + 1)%len]);
+                setQuery("");
               }}>
                 <Image src={"/assets/Vector.svg"} alt="filter" width={15} height={8.5}/>
               </button>
@@ -103,7 +104,7 @@ export default function Home() {
             </tr>
             )}
           <tr className=" bg-[#F5F5F5] text-[#616161]">
-            <th colSpan={6} className="text-center p-4"><button className=" disabled: text-[#9e9d9d]" onClick={nextPage} disabled={isLoading || !data.nextPageExists}>{isLoading? "loading..." : !data.nextPageExists? "" : "Load More"}</button></th>
+            <th colSpan={6} className="text-center p-4"><button className=" disabled: text-[#9e9d9d]" onClick={nextPage} disabled={isLoading || !data?.nextPageExists}>{error? " An error occurred" : isLoading? "loading..." : !data.nextPageExists? "No more data" : "Load More"}</button></th>
           </tr>
       </table>
       {selectedEvent && <Details event={selectedEvent} onClose={onClose}/>}
