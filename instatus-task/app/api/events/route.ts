@@ -13,7 +13,7 @@ const prisma : PrismaClient = new PrismaClient();
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const typeName = searchParams.get('type');
-  const type = typeName? translateFilter[typeName]: null;
+  const type = typeName? (translateFilter as any)[typeName]: null;
   const query = searchParams.get('query');
   const page = parseInt(searchParams.get("page")?? "1") - 1;
   console.log("type " + type + " query " + query )
