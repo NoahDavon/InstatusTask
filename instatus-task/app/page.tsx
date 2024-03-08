@@ -60,7 +60,6 @@ export default function Home() {
         </thead>
           {events.map(e => 
             <tr key={e.id} className=" bg-white hover:bg-[#FBFBFB] text-black" onClick={ () => setSelectedEvent(e)}>
-              {/* TODO: Icon */}
               {/* TODO: Extract */}
               <td className=" p-4 pr-0 flex gap-3"><Avatar Name={e.target_name.toUpperCase()}/>{e.target_name}</td>
               <td className=" p-4 pr-0">{e.action.name}</td>
